@@ -1,0 +1,48 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:composition template="../layout.xhtml">
+
+        <ui:define name="conteudo">
+            <p:panel header="Valor das vendas por mês">
+
+                <h:form id="formulario">
+
+                    <h:panelGrid columns="2"> 
+                        <h:outputLabel value="Ano:" />
+                        <p:inputText value="#{vendaController.ano}" />
+
+                    </h:panelGrid>
+
+
+                    <p:commandButton value="Gerar"
+                                     actionListener="#{vendaController.graficoLinha()}"
+                                     update="@form:grafico" icon="ui-icon-search"/>
+
+
+                    <br/>	
+                    <p:outputPanel id="grafico" >
+
+                        <p:chart type="line" model="#{vendaController.graficoLinha}"  rendered="#{vendaController.graficoLinha != null}" />
+
+                    </p:outputPanel>
+
+                </h:form>
+
+
+
+            </p:panel>
+
+
+
+
+
+        </ui:define>
+
+    </ui:composition>
+
+
+
+</html>

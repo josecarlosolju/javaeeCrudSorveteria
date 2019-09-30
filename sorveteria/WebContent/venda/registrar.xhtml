@@ -1,0 +1,106 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="../layout.xhtml">
+
+        <ui:define name="conteudo">
+
+            <h:form id="formulario">
+
+                <p:panel header="Venda">
+                    <p:growl id="mensagem"/>
+
+
+                    <h:inputHidden value="#{vendaController.venda.idVenda}" />
+
+
+                    <h:panelGrid columns="2">
+
+                        <h:outputLabel value="Data de Início:" />
+                        <p:calendar pattern="dd/MM/yyyy"
+                                    value="#{vendaController.venda.data}" />
+
+
+
+                        <h:outputLabel value="Cliente:" />
+                        <p:selectOneMenu value="#{vendaController.venda.pessoa}" converter="entityHerancaConverter">
+                            <f:selectItem itemLabel="Selecione um Cliente" itemValue="" />
+                            <f:selectItems value="#{pessoaController.todos()}" var="c"
+                                           itemLabel="#{c.nome}" itemValue="#{c}" />
+                        </p:selectOneMenu>
+
+
+                    </h:panelGrid>
+
+
+
+                </p:panel>
+
+                <br/><br/>
+
+                <p:panel header="Selecionar">
+
+                    <h:panelGrid columns="2">
+
+
+                        <h:outputLabel value="Produto:" />
+                        <p:selectOneMenu value="#{vendaController.vendaProduto.produto}"
+                                         converter="entityConverter">
+                            <f:selectItem itemLabel="Selecione um Produto" itemValue="" />
+                            <f:selectItems value="#{produtoController.todos()}" var="v"
+                                           itemLabel="#{v.fornecedor.marca.descricao} - #{v.fornecedor.descricao}" itemValue="#{v}" />
+                        </p:selectOneMenu>
+
+
+                        <h:outputLabel value="Valor:" />
+                        <p:inputText value="#{vendaController.vendaProduto.preco}" />
+
+                        <p:commandButton 
+                            actionListener="#{vendaController.adicionar()}" update="@form:produtoAdicionados, @form:mensagem"
+                            icon="ui-icon-plus" />
+
+                    </h:panelGrid>
+
+                </p:panel>
+
+
+                <p:panel header="Produtos Adicionados" id="produtoAdicionados">
+
+                    <p:dataTable value="#{vendaController.venda.vendaProdutos}" var="l"
+                                 emptyMessage="Nenhum produto adicionado" paginator="true" rows="20">
+
+
+                        <p:column headerText="Marca" style="width:10%">
+                            #{l.produto.fornecedor.marca.descricao}
+                        </p:column>
+
+                        <p:column headerText="Fornecedor" style="width:20%">
+                            #{l.produto.fornecedor.descricao}
+                        </p:column>
+
+                        <p:column headerText="Valor" style="width:10%">
+                            #{l.valor}
+                        </p:column>
+
+                    </p:dataTable>
+                </p:panel>
+
+                <br/><br/>
+                <p:commandButton value="Salvar"
+                                 actionListener="#{vendaController.salvar()}" update="@form"
+                                 icon="ui-icon-check" />
+
+            </h:form>
+
+
+
+        </ui:define>
+
+    </ui:composition>
+
+
+
+</html>

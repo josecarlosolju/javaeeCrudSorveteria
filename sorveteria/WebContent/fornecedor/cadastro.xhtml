@@ -1,0 +1,88 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:f="http://java.sun.com/jsf/core">
+	  
+	  <ui:composition template="../layout.xhtml">
+	  
+	  	<ui:define name="conteudo">
+	  	
+	  		<p:panel header="Fornecedores">
+	  		
+	  			<h:form>
+	  			
+	  				<p:growl />
+	  			
+	  				<h:inputHidden value="#{fornecedorController.fornecedor.idFornecedor}" />
+	  			
+	  				<h:panelGrid columns="2">
+	  				
+	  					<p:outputLabel value="Descrição:" />
+	  					<p:inputText value="#{fornecedorController.fornecedor.descricao}" />	
+	  				
+	  					<p:outputLabel value="Marca:" />
+	  					<p:selectOneMenu value="#{fornecedorController.fornecedor.marca}" 
+	  									 filter="true"
+	  									 converter="entityConverter">
+	  						
+	  						<f:selectItems value="#{marcaController.todos()}"
+	  									   var="marca"
+	  									   itemLabel="#{marca.descricao}"
+	  									   itemValue="#{marca}" />
+	  									   
+	  					</p:selectOneMenu>
+	  				</h:panelGrid>
+	  				
+	  				<p:commandButton value="Salvar"
+	  								 actionListener="#{fornecedorController.salvar()}"
+	  								 update="@form"
+	  								 icon="pi pi-save"  />
+	  			
+	  				<p:dataTable value="#{fornecedorController.todos()}"
+	  							 var="fornecedor"
+	  							 paginator="true"
+	  							 rows="10"
+	  							 emptyMessage="Nenhum fornecedor foi cadastrado">
+	  				
+	  						<p:column headerText="Código">
+	  							#{fornecedor.idFornecedor}	  						
+	  						</p:column>
+	  						
+	  						<p:column headerText="Descrição">
+	  							#{fornecedor.descricao}
+	  						</p:column>
+	  						
+	  						<p:column headerText="Marca">
+	  							#{fornecedor.marca.descricao}
+	  						</p:column>
+	  						
+	  						<p:column headerText="Editar">
+	  						
+	  							<p:commandButton value="Editar"
+	  								actionListener="#{fornecedorController.editar(fornecedor)}"
+	  								process="@this"
+	  								update="@form"/>
+	  						
+	  						</p:column>
+	  						
+	  						<p:column headerText="Excluir">
+	  							
+	  							<p:commandButton value="Excluir"
+	  								actionListener="#{fornecedorController.excluir(fornecedor.idFornecedor)}"
+	  								process="@this"
+	  								update="@form" />
+	  							
+	  						</p:column>
+	  				
+	  				</p:dataTable>
+	  				
+	  			</h:form>
+	  		
+	  		</p:panel>
+	  	
+	  	</ui:define>
+	  
+	  </ui:composition>
+
+</html>

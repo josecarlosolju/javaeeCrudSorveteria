@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+	<persistence-unit name="sorveteria" transaction-type="JTA">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+   		<jta-data-source>sorveteriaDB</jta-data-source>
+		
+		<class>sorveteria.dal.entidade.Marca</class>
+		<class>sorveteria.dal.entidade.Fornecedor</class>
+		<class>sorveteria.dal.entidade.Produto</class>
+		<class>sorveteria.dal.entidade.Sabor</class>
+		<class>sorveteria.dal.entidade.Calda</class>
+		<class>sorveteria.dal.entidade.Venda</class>
+		<class>sorveteria.dal.entidade.Funcionario</class>
+		<class>sorveteria.dal.entidade.Usuario</class>
+		<class>sorveteria.dal.entidade.Pessoa</class>
+		<class>sorveteria.dal.entidade.VendaProduto</class>
+		<class>sorveteria.dal.entidade.MetodoPagamento</class>
+		
+		<properties>
+			<property name="eclipselink.logging.level" value="FINE"/>
+			<property name="eclipselink.logging.parameters" value="true"/>
+			<property name="eclipselink.ddl-generation" value="create-tables"/>
+		</properties>
+	</persistence-unit>
+</persistence>

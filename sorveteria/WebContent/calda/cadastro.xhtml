@@ -1,0 +1,75 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:f="http://java.sun.com/jsf/core">
+	  
+	  <ui:composition template="../layout.xhtml">
+	  
+	  	<ui:define name="conteudo">
+	  	
+	  		<p:panel header="Caldas">
+	  		
+	  			<h:form>
+	  			
+	  				<p:growl />
+	  			
+	  				<h:inputHidden value="#{caldaController.calda.idCalda}" />
+	  			
+	  				<h:panelGrid columns="2">
+	  				
+	  					<p:outputLabel value="Descrição:" />
+	  					<p:inputText value="#{caldaController.calda.descricao}" />	
+	  			
+
+	  				</h:panelGrid>
+	  				
+	  				<p:commandButton value="Salvar"
+	  								 actionListener="#{caldaController.salvar()}"
+	  								 update="@form" />
+	  			
+	  				<p:dataTable value="#{caldaController.todos()}"
+	  							 var="calda"
+	  							 paginator="true"
+	  							 rows="10"
+	  							 emptyMessage="Nenhuma calda foi cadastrada">
+	  				
+	  						<p:column headerText="Código">
+	  							#{calda.idCalda}	  						
+	  						</p:column>
+	  						
+	  						<p:column headerText="Descrição">
+	  							#{calda.descricao}
+	  						</p:column>
+	  						
+	  				
+	  						
+	  						<p:column headerText="Editar">
+	  						
+	  							<p:commandButton value="Editar"
+	  								actionListener="#{caldaController.editar(calda)}"
+	  								process="@this"
+	  								update="@form"/>
+	  						
+	  						</p:column>
+	  						
+	  						<p:column headerText="Excluir">
+	  							
+	  							<p:commandButton value="Excluir"
+	  								actionListener="#{caldaController.excluir(calda.idCalda)}"
+	  								process="@this"
+	  								update="@form" />
+	  							
+	  						</p:column>
+	  				
+	  				</p:dataTable>
+	  				
+	  			</h:form>
+	  		
+	  		</p:panel>
+	  	
+	  	</ui:define>
+	  
+	  </ui:composition>
+
+</html>

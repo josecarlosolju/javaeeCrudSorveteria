@@ -1,0 +1,162 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:f="http://java.sun.com/jsf/core">
+	  
+	  <ui:composition template="../layout.xhtml">
+	  
+	  	<ui:define name="conteudo">
+	  	
+	  		<p:panel header="Produtos">
+	  		
+	  			<h:form>
+	  			
+	  				<p:growl />
+	  			
+	  				<h:inputHidden value="#{produtoController.produto.idProduto}" />
+	  			
+	  				<h:panelGrid columns="2">
+	  				
+	  					<p:outputLabel value="Fornecedor:" />
+	  					<p:selectOneMenu value="#{produtoController.produto.fornecedor}" 
+	  									 filter="true"
+	  									 converter="entityConverter">
+	  						
+	  						<f:selectItems value="#{fornecedorController.todos()}"
+	  									   var="fornecedor"
+	  									   itemLabel="#{fornecedor.descricao}"
+	  									   itemValue="#{fornecedor}" />
+	  									   
+	  					</p:selectOneMenu>
+	  					
+	  					<p:outputLabel value="Calda:" />
+	  					<p:selectOneMenu value="#{produtoController.produto.calda}" 
+	  									 filter="true"
+	  									 converter="entityConverter">
+	  						
+	  						<f:selectItems value="#{caldaController.todos()}"
+	  									   var="calda"
+	  									   itemLabel="#{calda.descricao}"
+	  									   itemValue="#{calda}" />
+	  									   
+	  					</p:selectOneMenu>
+	  				
+	  					<p:outputLabel value="Nome:" />
+	  					<p:inputText value="#{produtoController.produto.nome}" />	
+	  					
+	  					<p:outputLabel value="Valor:" />
+	  					<p:inputText value="#{produtoController.produto.preco}"/>	
+	  					
+	  					<p:outputLabel value="Qtd. Estoque:" />
+	  					<p:inputText value="#{produtoController.produto.quantidadeEstoque}" />	
+	  					
+	  					<p:outputLabel value="Sabors:" />
+	  					<p:selectCheckboxMenu value="#{produtoController.produto.sabores}"
+	  							converter="entityConverter"
+	  							label="sabores">
+	  							
+	  							<f:selectItems value="#{saborController.todos()}"
+	  								var="c"
+	  								itemLabel="#{c.descricao}"
+	  								itemValue="#{c}" />
+	  							
+	  					
+	  					</p:selectCheckboxMenu>
+	  					
+	  					<p:outputLabel value="Métodos de Pagamento:" />
+	  					<p:selectOneMenu value="#{produtoController.produto.pagamento}" 
+	  									 filter="true"
+	  									 converter="entityConverter">
+	  						
+	  						<f:selectItems value="#{pagamentoController.todos()}"
+	  									   var="pagamento"
+	  									   itemLabel="#{pagamento.descricao}"
+	  									   itemValue="#{pagamento}" />
+	  									   
+	  					</p:selectOneMenu>
+	  					
+	  				</h:panelGrid>
+	  				
+	  				<p:commandButton value="Salvar"
+	  								 actionListener="#{produtoController.salvar()}"
+	  								 update="@form" />
+	  			
+	  				<p:dataTable value="#{produtoController.todos()}"
+	  							 var="produto"
+	  							 paginator="true"
+	  							 rows="10"
+	  							 emptyMessage="Nenhum produto foi cadastrado">
+	  				
+	  						<p:column headerText="Código">
+	  							#{produto.idProduto}	  						
+	  						</p:column>
+	  						
+	  						<p:column headerText="Nome">
+	  							#{produto.nome}
+	  						</p:column>
+	  						
+	  						<p:column headerText="Preço">
+	  							#{produto.preco}
+	  						</p:column>
+	  						
+	  						<p:column headerText="Qtd. Estoque">
+	  							#{produto.quantidadeEstoque}
+	  						</p:column>
+	  						
+	  						<p:column headerText="Fornecedor">
+	  							#{produto.fornecedor.marca.descricao} - #{produto.fornecedor.descricao}
+	  						</p:column>
+	  						
+	  						<p:column headerText="Calda">
+	  							#{produto.calda.descricao}
+	  						</p:column>
+	  						
+	  						<p:column headerText="Sabors">
+	  						
+	  							<ul>
+	  								
+	  								<ui:repeat var="sabor" value="#{produto.sabores}">
+	  									
+	  									<li>#{sabor.descricao}</li>
+	  									
+	  								</ui:repeat>
+	  							
+	  							</ul>
+	  						
+	  						</p:column>
+	  						
+	  						<p:column headerText="Métodos de Pagamento">
+	  							#{produto.pagamento.descricao}
+	  						</p:column>
+	  						
+	  						
+	  						<p:column headerText="Editar">
+	  						
+	  							<p:commandButton value="Editar"
+	  								actionListener="#{produtoController.editar(produto)}"
+	  								process="@this"
+	  								update="@form"/>
+	  						
+	  						</p:column>
+	  						
+	  						<p:column headerText="Excluir">
+	  							
+	  							<p:commandButton value="Excluir"
+	  								actionListener="#{produtoController.excluir(produto.idProduto)}"
+	  								process="@this"
+	  								update="@form" />
+	  							
+	  						</p:column>
+	  				
+	  				</p:dataTable>
+	  				
+	  			</h:form>
+	  		
+	  		</p:panel>
+	  	
+	  	</ui:define>
+	  
+	  </ui:composition>
+
+</html>
